@@ -7,7 +7,7 @@ module SimpleForm
         merged_input_options = merge_wrapper_options(input_html_options, wrapper_options)
 
         @builder.text_field(attribute_name, merged_input_options) <<
-            @builder.hidden_field(attribute_name, hidden_html_options)
+          @builder.hidden_field(attribute_name.to_s + '_id', hidden_html_options)
       end
 
       private
@@ -33,8 +33,9 @@ module SimpleForm
 
       def input_tag_value
         return unless association
-
-        if association.respond_to?(:label)
+        if options.key?(:label_method)
+          association[options[:label_method]]
+        elsif association.respond_to?(:label)
           association.label
         elsif association.respond_to?(:title)
           association.title

@@ -2,6 +2,9 @@ jQuery(function ($) {
   $(document).on('focus', 'input.autocomplete', function () {
     var $input = $(this);
     var $value = $input.next('input[type=hidden]');
+    // clear in focus
+    $input.val('');
+    $value.val('');    
 
     if (!$input.data('autocomplete-loaded')) {
       $input
